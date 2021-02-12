@@ -26,7 +26,6 @@ _Note: all color shortcuts have prefix `c`_
 `e`: Change tool to equation
 `p`: Change tool to pen
 
-## Dev Info
 ## Project setup
 ```
 npm install
