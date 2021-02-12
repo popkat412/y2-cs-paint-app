@@ -7,44 +7,55 @@ export enum ToolType { Pen, Eraser, Spray }
 export abstract class Tool {
   abstract type: ToolType;
   abstract name: string;
+  abstract options: {};
 }
 
-export class Pen extends Tool {
+interface PenOptions {
   size: number;
   color: p5.Color;
-
+}
+export class Pen extends Tool {
   type = ToolType.Pen;
   name = "Pen";
+  options: PenOptions;
 
   constructor(p: p5, size?: number, color?: p5.Color) {
     super();
-    this.size = size ?? 3;
-    this.color = color ?? p.color(255);
+    this.options = {
+      size: size ?? 3,
+      color: color ?? p.color(255),
+    };
   }
 }
 
-export class Eraser extends Tool {
+interface EraserOptions {
   size: number;
-
+}
+export class Eraser extends Tool {
   type = ToolType.Eraser;
   name = "Eraser";
+  options: EraserOptions;
 
   constructor(size?: number) {
     super();
-    this.size = size ?? 10;
+    this.options = { size: size ?? 10, };
   }
 }
 
-export class Spray extends Tool {
+interface SprayOptions {
   size: number;
   color: p5.Color;
-
+}
+export class Spray extends Tool {
   type = ToolType.Spray;
   name = "Spray";
+  options: SprayOptions;
 
   constructor(p: p5, size?: number, color?: p5.Color) {
     super();
-    this.size = size ?? 3;
-    this.color = color ?? p.color(0);
+    this.options = {
+      size: size ?? 3,
+      color: color ?? p.color(255),
+    }
   }
 }

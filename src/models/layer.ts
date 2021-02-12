@@ -19,9 +19,9 @@ export default class Layer {
     if (state.currentTool instanceof Pen || state.currentTool instanceof Eraser) {
       this.graphics.noFill();
       this.graphics.stroke(state.currentTool instanceof Pen
-        ? state.currentTool.color
+        ? state.currentTool.options.color
         : state.backgroundColor ?? this.graphics.color(DEFAULT_BACKGROUND_COLOR));
-      this.graphics.strokeWeight(state.currentTool.size);
+      this.graphics.strokeWeight(state.currentTool.options.size);
       this.graphics.beginShape();
       for (const point of this.#points) this.graphics.vertex(point.x, point.y);
       this.graphics.endShape();

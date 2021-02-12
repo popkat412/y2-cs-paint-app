@@ -16,10 +16,13 @@
           <button></button>
         </div>
         <!-- <h2>Options</h2>
-        <div v-for="(value, option) in $store.currentTool" :key="option">
+        <div
+          v-for="(value, option) in $store.currentTool.options"
+          :key="option"
+        >
           <div v-if="option != 'type' && option != 'name'">
             <label :for="option">{{ option }}</label>
-            <input type="text" v-model="" />
+            <input type="text" @input="updateOption(option)" />
           </div>
         </div> -->
       </div>
@@ -73,6 +76,11 @@ export default class App extends Vue {
 
   clearLayer() {
     this.$store.currentLayer.clear();
+  }
+
+  updateOption(option: string) {
+    // TODO: Validate input
+    console.log(option);
   }
 
   clickedLayer(idx: number) {
