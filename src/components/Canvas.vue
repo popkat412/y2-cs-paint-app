@@ -6,9 +6,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import p5 from "p5";
 import Layer from "@/models/layer";
-import { ToolType } from "@/models/tool";
+import { ToolOption, ToolType } from "@/models/tool";
 import EVENTS from "@/models/events";
 import hasOwnProperty from "@/helpers/hasOwnProperty";
+import { Color } from "@/models/types";
 
 @Component
 export default class Canvas extends Vue {
@@ -56,7 +57,8 @@ export default class Canvas extends Vue {
               const col = this.$config.changeColorShortcutMap[key];
               if (col) {
                 console.log(`Changing color to ${col}...`);
-                this.$store.currentTool.options.color = col;
+                (this.$store.currentTool.options
+                  .color as ToolOption<Color>).value = col;
               } else {
                 console.log(`Invalid color: ${key}`);
               }
