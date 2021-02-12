@@ -1,1 +1,3 @@
-export const DEFAULT_BACKGROUND_COLOR = 0;
+import { Color } from "./models/types";
+
+export const DEFAULT_BACKGROUND_COLOR: Color = "black";

@@ -1,6 +1,6 @@
-import Layer from "./models/layer";
-import { Tool, ToolType } from "@/models/tool";
-import p5 from "p5";
+import Layer from "@/models/layer";
+import { Eraser, Pen, Spray, Tool, ToolType } from "@/models/tool";
+import { Color } from "@/models/types";
 
 export default class GlobalState {
   layers: Layer[];
@@ -9,18 +9,21 @@ export default class GlobalState {
   tools: Tool[];
   currentToolIdx: number;
 
-  // Stupidly need to put null because can't create color without p5 instance
-  backgroundColor: p5.Color | null = null;
+  backgroundColor: Color = "black";
 
   currentPrefixedShortcutKey: string | null = null;
 
-  /// Because some of the properties needs a p5 instance, they will only be set
-  /// in the setup method of the sketch
   constructor() {
+    /// Because making a layer needs a p5 instance, it will only be set
+    /// in the setup method of the sketch
     this.layers = [];
     this.currentLayerIdx = 0;
 
-    this.tools = [];
+    this.tools = [
+      new Pen(),
+      new Eraser(),
+      new Spray(),
+    ];
     this.currentToolIdx = 0;
   }
 

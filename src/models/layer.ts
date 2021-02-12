@@ -6,11 +6,15 @@ import { DEFAULT_BACKGROUND_COLOR } from "@/constants";
 export default class Layer {
   graphics: p5.Graphics;
   name: string;
+  width: number;
+  height: number;
 
   #points: p5.Vector[];
 
   constructor(p: p5, name: string) {
     this.graphics = p.createGraphics(p.width, p.height);
+    this.width = p.width;
+    this.height = p.height;
     this.name = name;
     this.#points = [];
   }
@@ -20,7 +24,7 @@ export default class Layer {
       this.graphics.noFill();
       this.graphics.stroke(state.currentTool instanceof Pen
         ? state.currentTool.options.color
-        : state.backgroundColor ?? this.graphics.color(DEFAULT_BACKGROUND_COLOR));
+        : state.backgroundColor ?? DEFAULT_BACKGROUND_COLOR);
       this.graphics.strokeWeight(state.currentTool.options.size);
       this.graphics.beginShape();
       for (const point of this.#points) this.graphics.vertex(point.x, point.y);

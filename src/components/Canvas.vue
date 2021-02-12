@@ -6,7 +6,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import p5 from "p5";
 import Layer from "@/models/layer";
-import { Eraser, Pen, Spray, ToolType } from "@/models/tool";
+import { ToolType } from "@/models/tool";
 import EVENTS from "@/models/events";
 import hasOwnProperty from "@/helpers/hasOwnProperty";
 
@@ -24,7 +24,6 @@ export default class Canvas extends Vue {
       p.setup = () => {
         p.createCanvas(window.innerWidth * 0.5, window.innerHeight);
         this.$store.layers = [new Layer(p, "Layer 1")];
-        this.$store.tools = [new Pen(p), new Eraser(), new Spray(p)];
 
         console.log(this.$store);
       };
@@ -53,11 +52,11 @@ export default class Canvas extends Vue {
             this.$store.currentPrefixedShortcutKey ==
             this.$config.changeColorShortcutPrefix
           ) {
-            if (hasOwnProperty(this.$store.currentTool, "color")) {
+            if (hasOwnProperty(this.$store.currentTool.options, "color")) {
               const col = this.$config.changeColorShortcutMap[key];
               if (col) {
                 console.log(`Changing color to ${col}...`);
-                this.$store.currentTool.color = p.color("blue");
+                this.$store.currentTool.options.color = col;
               } else {
                 console.log(`Invalid color: ${key}`);
               }
@@ -67,8 +66,6 @@ export default class Canvas extends Vue {
         };
 
         switch (p.key) {
-          case "a":
-            break;
           case "b":
             dealWithDoubleShortcut("b");
             break;
@@ -79,22 +76,18 @@ export default class Canvas extends Vue {
               this.$store.currentPrefixedShortcutKey = null;
             }, 1000);
             break;
-          case "d":
-            break;
           case "e":
             console.log("E key pressed");
             this.$store.setCurrentTool(ToolType.Eraser);
-            break;
-          case "f":
-            break;
-          case "g":
             break;
           case "p":
             this.$store.setCurrentTool(ToolType.Pen);
             break;
           case "w":
+            dealWithDoubleShortcut("w");
             break;
           default:
+            dealWithDoubleShortcut(p.key);
             break;
         }
       };

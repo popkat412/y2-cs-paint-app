@@ -1,4 +1,4 @@
-import p5 from "p5";
+import { Color } from "@/models/types";
 
 /// Kind of a hack so we can easily get the type of the tool class
 export enum ToolType { Pen, Eraser, Spray }
@@ -12,18 +12,18 @@ export abstract class Tool {
 
 interface PenOptions {
   size: number;
-  color: p5.Color;
+  color: Color;
 }
 export class Pen extends Tool {
   type = ToolType.Pen;
   name = "Pen";
   options: PenOptions;
 
-  constructor(p: p5, size?: number, color?: p5.Color) {
+  constructor(size?: number, color?: Color) {
     super();
     this.options = {
       size: size ?? 3,
-      color: color ?? p.color(255),
+      color: color ?? "white",
     };
   }
 }
@@ -44,18 +44,18 @@ export class Eraser extends Tool {
 
 interface SprayOptions {
   size: number;
-  color: p5.Color;
+  color: Color;
 }
 export class Spray extends Tool {
   type = ToolType.Spray;
   name = "Spray";
   options: SprayOptions;
 
-  constructor(p: p5, size?: number, color?: p5.Color) {
+  constructor(size?: number, color?: Color) {
     super();
     this.options = {
       size: size ?? 3,
-      color: color ?? p.color(255),
+      color: color ?? "white",
     }
   }
 }
