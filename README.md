@@ -2,10 +2,11 @@
 
 ## TODO
 - [x] Fix opacity bug
-- [ ] Update currently selected layer when layers are rearranged
 - [ ] Show layers properly (shown on top == appears on top)
+- [ ] Update currently selected layer when layers are rearranged
 - [ ] Add better CSS
 - [ ] Show indicator of size
+- [x] Save canvas option
 
 ## Features
 - [ ] Confirm before close tab

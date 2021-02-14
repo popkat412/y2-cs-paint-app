@@ -15,6 +15,8 @@ import { Color } from "@/models/types";
 export default class Canvas extends Vue {
   mounted() {
     const sketch = (p: p5) => {
+      let canvas: p5.Renderer | null;
+
       this.$root.$on(EVENTS.createLayer, () => {
         this.$store.layers.push(
           new Layer(p, `Layer ${this.$store.layers.length + 1}`)
@@ -22,8 +24,21 @@ export default class Canvas extends Vue {
         this.$store.currentLayerIdx = this.$store.layers.length - 1;
       });
 
+      this.$root.$on(EVENTS.saveCanvas, () => {
+        if (canvas == null) {
+          alert("Sorry, the canvas hasn't loaded yet");
+        } else {
+          const format = prompt("File format (png|jpg)", "png")?.toLowerCase();
+          if (format != "png" && format != "jpg") {
+            alert("Invalid format, can only be 'png' or 'jpg'");
+          } else {
+            p.save(canvas, `sketch.${format}`);
+          }
+        }
+      });
+
       p.setup = () => {
-        p.createCanvas(window.innerWidth * 0.5, window.innerHeight);
+        canvas = p.createCanvas(window.innerWidth * 0.5, window.innerHeight);
         this.$store.layers = [new Layer(p, "Layer 1")];
 
         console.log(this.$store);

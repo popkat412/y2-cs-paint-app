@@ -12,8 +12,6 @@
           >
             {{ tool.name }}
           </button>
-          <button @click="clearLayer">Clear Layer</button>
-          <button></button>
         </div>
         <h2>Options</h2>
         <div
@@ -57,6 +55,11 @@
         </draggable>
         <button @click="addLayer">Add Layer</button>
         <p>{{ $store.currentPrefixedShortcutKey }}</p>
+
+        <h2>Actions</h2>
+
+        <button @click="clearLayer">Clear Layer</button>
+        <button @click="saveCanvas">Save as Image</button>
       </div>
     </div>
   </div>
@@ -97,6 +100,10 @@ export default class App extends Vue {
 
   clickedLayer(idx: number) {
     this.$store.currentLayerIdx = idx;
+  }
+
+  saveCanvas() {
+    this.$root.$emit(EVENTS.saveCanvas);
   }
 }
 </script>
