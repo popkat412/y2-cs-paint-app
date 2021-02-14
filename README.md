@@ -5,14 +5,16 @@
 - [ ] Update currently selected layer when layers are rearranged
 - [ ] Show layers properly (shown on top == appears on top)
 - [ ] Add better CSS
+- [ ] Show indicator of size
 
 ## Features
 - [ ] Confirm before close tab
-- [ ] save as json/binary dump
+- [ ] Add text
 - [ ] Keyboard Shortcuts + General help page
 - [ ] Each tool has info associated to it
 - [ ] rect/ellipse tool
 - [ ] Bucket fill
+- [ ] save as json/binary dump
 - [ ] select tool???
 - [ ] upload image???
 

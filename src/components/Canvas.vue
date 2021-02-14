@@ -31,16 +31,12 @@ export default class Canvas extends Vue {
 
       p.draw = () => {
         p.background(this.$store.backgroundColor ?? p.color(0));
-        for (const layer of this.$store.layers) layer.draw(this.$store);
+        for (const layer of this.$store.layers) layer.update(this.$store);
         for (const layer of this.$store.layers) p.image(layer.graphics, 0, 0);
       };
 
       p.mouseDragged = () => {
-        this.$store.currentLayer?.mouseDragged(
-          p.mouseX,
-          p.mouseY,
-          this.$store.currentTool
-        );
+        this.$store.currentLayer?.mouseDragged(p, this.$store.currentTool);
       };
 
       p.mouseReleased = () => {

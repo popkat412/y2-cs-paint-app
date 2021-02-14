@@ -16,7 +16,7 @@ export interface ToolOption<T> {
   type: OptionType;
 }
 
-interface PenOptions {
+export interface PenOptions {
   size: ToolOption<number>;
   color: ToolOption<Color>;
 }
@@ -34,7 +34,7 @@ export class Pen extends Tool {
   }
 }
 
-interface EraserOptions {
+export interface EraserOptions {
   size: ToolOption<number>;
 }
 export class Eraser extends Tool {
@@ -48,7 +48,7 @@ export class Eraser extends Tool {
   }
 }
 
-interface SprayOptions {
+export interface SprayOptions {
   size: ToolOption<number>;
   color: ToolOption<Color>;
 }
