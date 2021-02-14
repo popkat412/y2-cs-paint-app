@@ -47,7 +47,7 @@
           <transition-group>
             <div
               v-for="(layer, index) in $store.layers"
-              :key="index"
+              :key="layer.name"
               :class="{ selectedLayer: index == $store.currentLayerIdx }"
               @click="clickedLayer(index)"
             >

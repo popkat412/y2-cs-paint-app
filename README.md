@@ -1,7 +1,10 @@
 # y2-cs-paint-app
 
 ## TODO
+- [ ] Fix opacity bug
+- [ ] Update currently selected layer when layers are rearranged
 - [ ] Show layers properly (shown on top == appears on top)
+- [ ] Add better CSS
 
 ## Features
 - [ ] Confirm before close tab
