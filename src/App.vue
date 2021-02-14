@@ -15,16 +15,26 @@
           <button @click="clearLayer">Clear Layer</button>
           <button></button>
         </div>
-        <!-- <h2>Options</h2>
+        <h2>Options</h2>
         <div
-          v-for="(value, option) in $store.currentTool.options"
-          :key="option"
+          v-for="(option, optionName) in $store.currentTool.options"
+          style="text-align: left"
+          :key="optionName"
         >
-          <div v-if="option != 'type' && option != 'name'">
-            <label :for="option">{{ option }}</label>
-            <input type="text" @input="updateOption(option)" />
-          </div>
-        </div> -->
+          <label>{{ titleCase(optionName) }}</label>
+          <input
+            v-if="option.type == 'number'"
+            min="1"
+            v-model.number="option.value"
+            type="number"
+          />
+          <!-- cant use v-model because https://github.com/xiaokaike/vue-color/issues/185 -->
+          <chrome-picker
+            v-else-if="option.type == 'color'"
+            :value="option.value"
+            @input="(c) => ($store.currentTool.options.color.value = c.hex8)"
+          />
+        </div>
       </div>
 
       <div class="column middle">
@@ -57,11 +67,13 @@ import { Component, Vue } from "vue-property-decorator";
 import Canvas from "@/components/Canvas.vue";
 import EVENTS from "@/models/events";
 import draggable from "vuedraggable";
+import { Chrome } from "vue-color";
 
 @Component({
   components: {
     Canvas,
     draggable,
+    "chrome-picker": Chrome,
   },
 })
 export default class App extends Vue {

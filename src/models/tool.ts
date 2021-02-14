@@ -3,7 +3,7 @@ import { Color } from "@/models/types";
 /// Kind of a hack so we can easily get the type of the tool class
 /// Why do i feel like everything i do is a hack
 export enum ToolType { Pen, Eraser, Spray }
-export enum OptionType { Number, Color }
+export type OptionType = "number" | "color";
 
 export abstract class Tool {
   abstract readonly type: ToolType;
@@ -28,8 +28,8 @@ export class Pen extends Tool {
   constructor(size?: number, color?: Color) {
     super();
     this.options = {
-      size: { type: OptionType.Number, value: size ?? 3 },
-      color: { type: OptionType.Color, value: color ?? "white" },
+      size: { type: "number", value: size ?? 3 },
+      color: { type: "color", value: color ?? "white" },
     };
   }
 }
@@ -44,7 +44,7 @@ export class Eraser extends Tool {
 
   constructor(size?: number) {
     super();
-    this.options = { size: { type: OptionType.Number, value: size ?? 10 } };
+    this.options = { size: { type: "number", value: size ?? 10 } };
   }
 }
 
@@ -60,8 +60,8 @@ export class Spray extends Tool {
   constructor(size?: number, color?: Color) {
     super();
     this.options = {
-      size: { type: OptionType.Number, value: size ?? 3 },
-      color: { type: OptionType.Color, value: color ?? "white" },
+      size: { type: "number", value: size ?? 3 },
+      color: { type: "color", value: color ?? "white" },
     }
   }
 }

@@ -1,5 +1,18 @@
 # y2-cs-paint-app
 
+## TODO
+- [ ] Show layers properly (shown on top == appears on top)
+
+## Features
+- [ ] Confirm before close tab
+- [ ] save as json/binary dump
+- [ ] Keyboard Shortcuts + General help page
+- [ ] Each tool has info associated to it
+- [ ] rect/ellipse tool
+- [ ] Bucket fill
+- [ ] select tool???
+- [ ] upload image???
+
 ## Documentation
 (aka notes to self)
 - Tools
@@ -9,9 +22,13 @@
 - Options
   - Color
   - Size
-- Global state
-  - Current layer (`int`)
-  - `options` object containing above options
+
+### Layers
+Layers are shown on the right, (it should be that) the layer that is shown on top, is drawn on top,
+but in the actual code, its implemented as an array and it gets drawn from start to end,
+so the topmost layer is actually at the back.  
+Things are done this way so its easier to add layers (just push to the end)
+and also drawing is easier (can do for...of loop instead of needing custom loop to loop backwards)
 
 ## Keyboard Shortcuts
 **Color**
