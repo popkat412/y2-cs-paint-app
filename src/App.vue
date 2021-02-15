@@ -58,8 +58,8 @@
 
       <div class="sidebar right">
         <h2>Layers</h2>
-        <draggable v-model="$store.layers">
-          <transition-group>
+        <draggable v-model="$store.layers" :animation="200">
+          <transition-group type="transition">
             <div
               v-for="(layer, index) in $store.layers"
               :key="layer.name"
@@ -71,7 +71,9 @@
             </div>
           </transition-group>
         </draggable>
-        <button @click="addLayer">Add Layer</button>
+        <div class="center-child">
+          <button @click="addLayer">Add Layer</button>
+        </div>
         <p>{{ $store.currentPrefixedShortcutKey }}</p>
 
         <h2>Actions</h2>
@@ -143,8 +145,6 @@ export default class App extends Vue {
 <style scoped>
 #tools {
   float: left;
-  margin: auto;
-  width: 100%;
   margin-bottom: 20px;
 }
 

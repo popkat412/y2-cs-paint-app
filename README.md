@@ -2,6 +2,7 @@
 
 ## TODO
 - [x] Fix opacity bug
+- [ ] Implement spray
 - [ ] Show layers properly (shown on top == appears on top)
 - [ ] Update currently selected layer when layers are rearranged
 - [x] Add better CSS

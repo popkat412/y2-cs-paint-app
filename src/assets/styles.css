@@ -1,7 +1,7 @@
 /* Main stuff */
 body {
   margin: 0px;
-  text-align: center;
+  /* text-align: center; */
   overflow-y: hidden;
   overflow-x: scroll;
   font-family: Helvetica, sans-serif;
@@ -30,10 +30,21 @@ main {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
 }
-.sidebar.left {
+
+.sidebar {
   padding: 10px;
+}
+
+.sidebar.left {
   border-right: 3px solid gray;
 }
 .sidebar.right {
   border-left: 3px solid gray;
+}
+
+/* Utilities */
+.center-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
