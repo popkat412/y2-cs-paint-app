@@ -29,6 +29,7 @@ export default class Layer {
     for (const shape of this.shapes) {
       if (shape instanceof PointsShape) {
         this.graphics.noFill();
+        // The `"color" in shape.options` is just to satisfy typescript
         this.graphics.stroke(shape.tool == ToolType.Pen && "color" in shape.options
           ? shape.options.color.value
           : state.backgroundColor ?? DEFAULT_BACKGROUND_COLOR);
@@ -75,7 +76,8 @@ export default class Layer {
   }
 
   clear() {
-    this.graphics.clear();
+    this.shapes = [];
+    this.currentShapeIdx = null;
   }
 
 
