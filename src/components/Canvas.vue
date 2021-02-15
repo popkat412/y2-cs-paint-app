@@ -1,5 +1,9 @@
 <template>
-  <div id="canvas"></div>
+  <div
+    id="canvas"
+    @mouseover="$emit('mouseover')"
+    @mouseleave="$emit('mouseleave')"
+  ></div>
 </template>
 
 <script lang="ts">
@@ -113,7 +117,7 @@ export default class Canvas extends Vue {
 </script>
 
 <style scoped>
-/* #canvas {
-  margin: auto;
-} */
+#canvas {
+  cursor: none;
+}
 </style>

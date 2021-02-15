@@ -1,36 +1,39 @@
+/* Main stuff */
 body {
   margin: 0px;
   text-align: center;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  font-family: Helvetica, sans-serif;
+  background-color: #c9c9c9;
 }
 
-/* Create three unequal columns that floats next to each other */
-.column {
-  float: left;
-  padding: 0px;
+/* Buttons  */
+button {
+  text-align: center;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid black;
+  margin: 5px;
+  background-color: white;
 }
 
-/* Left and right column */
-.column.side {
-  width: 25%;
+input[type="number"],
+input[type="text"] {
+  height: 2rem;
+  border-radius: 5px;
 }
 
-/* Middle column */
-.column.middle {
-  width: 50%;
+/* Create three unequal columns */
+main {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
 }
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.sidebar.left {
+  padding: 10px;
+  border-right: 3px solid gray;
 }
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column.side,
-  .column.middle {
-    width: 100%;
-  }
+.sidebar.right {
+  border-left: 3px solid gray;
 }
