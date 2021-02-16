@@ -168,9 +168,13 @@ export default class App extends Vue {
   align-items: center;
   width: 100%;
   height: 2em;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 .selectedLayer {
-  background: gray;
+  background: gold;
 }
 
 #tool-size-indicator {
