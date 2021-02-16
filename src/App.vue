@@ -144,12 +144,7 @@ export default class App extends Vue {
 
 <style scoped>
 #tools {
-  float: left;
   margin-bottom: 20px;
-}
-
-#tools::after {
-  float: none;
 }
 
 .selectedTool {
