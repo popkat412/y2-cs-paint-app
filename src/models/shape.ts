@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { EraserOptions, PenOptions, SprayOptions, ToolType } from "./tool";
+import { EraserOptions, PenOptions, RectOptions, ToolType } from "./tool";
 
 export abstract class Shape {
   /// This is the tool the shape was made with
@@ -23,14 +23,20 @@ export class PointsShape extends Shape {
   }
 }
 
-export class SprayShape extends Shape {
-  // TODO: Implement this
+export class RectShape extends Shape {
+  topLeft: p5.Vector;
+  bottomRight: p5.Vector;
 
   tool: ToolType;
-  options: SprayOptions;
+  options: RectOptions;
 
-  constructor(tool: ToolType, options: SprayOptions) {
+
+  constructor(topLeft: p5.Vector, bottomRight: p5.Vector, tool: ToolType, options: RectOptions) {
     super();
+
+    this.topLeft = topLeft;
+    this.bottomRight = bottomRight;
+
     this.tool = tool;
     this.options = options;
   }

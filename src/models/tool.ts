@@ -2,8 +2,8 @@ import { Color } from "@/models/types";
 
 /// Kind of a hack so we can easily get the type of the tool class
 /// Why do i feel like everything i do is a hack
-export enum ToolType { Pen, Eraser, Spray }
-export type OptionType = "number" | "color";
+export enum ToolType { Pen, Eraser, Rect }
+export type OptionType = "number" | "color" | "boolean";
 
 export abstract class Tool {
   abstract readonly type: ToolType;
@@ -48,20 +48,28 @@ export class Eraser extends Tool {
   }
 }
 
-export interface SprayOptions {
-  size: ToolOption<number>;
-  color: ToolOption<Color>;
+export interface RectOptions {
+  stroke: ToolOption<boolean>; // controls whether to draw stroke
+  strokeWeight: ToolOption<number>;
+  strokeColor: ToolOption<Color>;
+  fill: ToolOption<boolean>; // controls whether to draw fill
+  fillColor: ToolOption<Color>;
+  cornerRadius: ToolOption<number>;
 }
-export class Spray extends Tool {
-  readonly type = ToolType.Spray;
-  readonly name = "Spray";
-  options: SprayOptions;
+export class Rect extends Tool {
+  readonly type = ToolType.Rect;
+  readonly name = "Rect";
+  options: RectOptions;
 
-  constructor(size?: number, color?: Color) {
+  constructor(stroke?: boolean, strokeWeight?: number, strokeColor?: Color, fill?: boolean, fillColor?: Color, cornerRadius?: number) {
     super();
     this.options = {
-      size: { type: "number", value: size ?? 3 },
-      color: { type: "color", value: color ?? "white" },
+      stroke: { type: "boolean", value: stroke ?? true },
+      strokeWeight: { type: "number", value: strokeWeight ?? 3 },
+      strokeColor: { type: "color", value: strokeColor ?? "white" },
+      fill: { type: "boolean", value: fill ?? false },
+      fillColor: { type: "color", value: fillColor ?? "white" },
+      cornerRadius: { type: "number", value: cornerRadius ?? 0 },
     }
   }
 }

@@ -1,20 +1,21 @@
 # y2-cs-paint-app
 
 ## TODO
-- [x] Fix opacity bug
-- [ ] Implement spray
+- [ ] Implement rect/ellipse
 - [ ] Show layers properly (shown on top == appears on top)
 - [ ] Update currently selected layer when layers are rearranged
+- [ ] Undo/Redo
+- [ ] Confirm before close tab
+- [x] Fix opacity bug
 - [x] Add better CSS
 - [x] Show indicator of size
 - [x] Save canvas option
 
 ## Features
-- [ ] Confirm before close tab
+- [ ] Collapsible left bar
 - [ ] Add text
 - [ ] Keyboard Shortcuts + General help page
 - [ ] Each tool has info associated to it
-- [ ] rect/ellipse tool
 - [ ] Bucket fill
 - [ ] save as json/binary dump
 - [ ] select tool???

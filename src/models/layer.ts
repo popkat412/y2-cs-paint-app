@@ -1,6 +1,6 @@
 import p5 from "p5";
-import { Eraser, Pen, Tool, ToolType } from "@/models/tool";
-import { PointsShape, Shape, SprayShape } from "./shape";
+import { Eraser, Pen, Rect, Tool, ToolType } from "@/models/tool";
+import { PointsShape, RectShape, Shape } from "./shape";
 import { DEFAULT_BACKGROUND_COLOR } from "@/constants";
 import GlobalState from "@/globalState";
 import deepCopy from "@/helpers/deepCopy";
@@ -27,6 +27,7 @@ export default class Layer {
   update(state: GlobalState) {
     this.graphics.clear();
     for (const shape of this.shapes) {
+      this.graphics.push();
       if (shape instanceof PointsShape) {
         this.graphics.noFill();
         // The `"color" in shape.options` is just to satisfy typescript
@@ -39,22 +40,20 @@ export default class Layer {
           this.graphics.vertex(pt.x, pt.y);
         }
         this.graphics.endShape();
-      } else if (shape instanceof SprayShape) {
-        // TODO: Implement this
-        throw "Not Implemented";
-      }
-    }
+      } else if (shape instanceof RectShape) {
+        if (shape.options.fill.value) this.graphics.fill(shape.options.fillColor.value);
+        else this.graphics.noFill();
 
-    // if (state.currentTool instanceof Pen || state.currentTool instanceof Eraser) {
-    //   this.graphics.noFill();
-    //   this.graphics.stroke(state.currentTool instanceof Pen
-    //     ? state.currentTool.options.color.value
-    //     : state.backgroundColor ?? DEFAULT_BACKGROUND_COLOR);
-    //   this.graphics.strokeWeight(state.currentTool.options.size.value);
-    //   this.graphics.beginShape();
-    //   for (const point of this.#points) this.graphics.vertex(point.x, point.y);
-    //   this.graphics.endShape();
-    // }
+        if (shape.options.stroke.value) this.graphics.stroke(shape.options.strokeColor.value);
+        else this.graphics.noStroke();
+
+        this.graphics.strokeWeight(shape.options.strokeWeight.value);
+
+        this.graphics.rectMode(this.graphics.CORNERS);
+        this.graphics.rect(shape.topLeft.x, shape.topLeft.y, shape.bottomRight.x, shape.bottomRight.y, shape.options.cornerRadius.value);
+      }
+      this.graphics.pop();
+    }
   }
 
   mouseDragged(p: p5, tool: Tool) {
@@ -66,6 +65,17 @@ export default class Layer {
       } else {
         if (this.currentShape instanceof PointsShape) {
           this.currentShape.points.push(mousePos);
+        }
+      }
+    } else if (tool instanceof Rect) {
+      if (this.currentShapeIdx == null) {
+        this.currentShapeIdx = this.shapes.length;
+        // set the bottom right as the same as top left for now
+        this.shapes.push(new RectShape(mousePos, mousePos, tool.type, deepCopy(tool.options)));
+      } else {
+        if (this.currentShape instanceof RectShape) {
+          // update the shape as person is dragging
+          this.currentShape.bottomRight = mousePos;
         }
       }
     }

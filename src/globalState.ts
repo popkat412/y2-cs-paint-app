@@ -1,5 +1,5 @@
 import Layer from "@/models/layer";
-import { Eraser, Pen, Spray, Tool, ToolType } from "@/models/tool";
+import { Eraser, Pen, Rect, Tool, ToolType } from "@/models/tool";
 import { Color } from "@/models/types";
 
 export default class GlobalState {
@@ -22,7 +22,7 @@ export default class GlobalState {
     this.tools = [
       new Pen(),
       new Eraser(),
-      new Spray(),
+      new Rect(),
     ];
     this.currentToolIdx = 0;
   }

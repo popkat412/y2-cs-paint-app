@@ -3,12 +3,7 @@
     <div
       id="tool-size-indicator"
       v-if="showingSizeIndicator"
-      :style="{
-        width: $store.currentTool.options.size.value + 'px',
-        height: $store.currentTool.options.size.value + 'px',
-        top: mousePos.y - $store.currentTool.options.size.value / 2 + 'px',
-        left: mousePos.x - $store.currentTool.options.size.value / 2 + 'px',
-      }"
+      :style="sizeIndicatorStyles"
     ></div>
     <main>
       <div class="sidebar left">
@@ -31,10 +26,9 @@
             :key="optionName"
           >
             <label>{{ titleCase(optionName) }}</label>
-            <br />
+            <br v-if="option.type != 'boolean'" />
             <input
               v-if="option.type == 'number'"
-              min="1"
               v-model.number="option.value"
               type="number"
             />
@@ -43,7 +37,12 @@
               class="color-picker"
               v-else-if="option.type == 'color'"
               :value="option.value"
-              @input="(c) => ($store.currentTool.options.color.value = c.hex8)"
+              @input="(c) => (option.value = c.hex8)"
+            />
+            <input
+              v-else-if="option.type == 'boolean'"
+              type="checkbox"
+              v-model="option.value"
             />
           </div>
         </div>
@@ -51,8 +50,8 @@
 
       <div>
         <Canvas
-          @mouseover="showingSizeIndicator = true"
-          @mouseleave="showingSizeIndicator = false"
+          @mouseover="hoveringCanvas = true"
+          @mouseleave="hoveringCanvas = false"
         />
       </div>
 
@@ -91,6 +90,7 @@ import Canvas from "@/components/Canvas.vue";
 import EVENTS from "@/models/events";
 import draggable from "vuedraggable";
 import { Chrome } from "vue-color";
+import { Eraser, Pen, Rect } from "./models/tool";
 
 interface Pos {
   x: number;
@@ -106,7 +106,7 @@ interface Pos {
 })
 export default class App extends Vue {
   // DATA
-  showingSizeIndicator = false;
+  hoveringCanvas = false;
   mousePos: Pos = { x: 0, y: 0 };
 
   // METHODS
@@ -138,6 +138,35 @@ export default class App extends Vue {
 
   saveCanvas() {
     this.$root.$emit(EVENTS.saveCanvas);
+  }
+
+  // GETTERS
+  get sizeIndicatorStyles() {
+    let size = 3;
+    if (
+      this.$store.currentTool instanceof Pen ||
+      this.$store.currentTool instanceof Eraser
+    ) {
+      size = this.$store.currentTool.options.size.value;
+    } else if (this.$store.currentTool instanceof Rect) {
+      size = this.$store.currentTool.options.stroke
+        ? this.$store.currentTool.options.strokeWeight.value
+        : size;
+    }
+
+    // Prevente user confusion on why cursor disappeared
+    if (size < 1) size = 1;
+
+    return {
+      width: size + "px",
+      height: size + "px",
+      top: this.mousePos.y - size / 2 + "px",
+      left: this.mousePos.x - size / 2 + "px",
+    };
+  }
+
+  get showingSizeIndicator() {
+    return this.hoveringCanvas; // && "size" in this.$store.currentTool.options;
   }
 }
 </script>
