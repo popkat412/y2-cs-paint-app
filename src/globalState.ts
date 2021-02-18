@@ -4,7 +4,7 @@ import { Color } from "@/models/types";
 
 export default class GlobalState {
   layers: Layer[];
-  currentLayerIdx: number;
+  currentLayerId: string | null = null; // this needs to be null because we don't know the layer id until we create it, and creating it needs a p5 instance
 
   tools: Tool[];
   currentToolIdx: number;
@@ -17,7 +17,6 @@ export default class GlobalState {
     /// Because making a layer needs a p5 instance, it will only be set
     /// in the setup method of the sketch
     this.layers = [];
-    this.currentLayerIdx = 0;
 
     this.tools = [
       new Pen(),
@@ -36,6 +35,6 @@ export default class GlobalState {
   }
 
   get currentLayer(): Layer {
-    return this.layers[this.currentLayerIdx];
+    return this.layers.filter(v => v.id == this.currentLayerId)[0];
   }
 }

@@ -60,11 +60,11 @@
         <draggable v-model="$store.layers" :animation="200">
           <transition-group type="transition">
             <div
-              v-for="(layer, index) in $store.layers"
-              :key="layer.name"
-              :class="{ selectedLayer: index == $store.currentLayerIdx }"
+              v-for="layer in $store.layers"
+              :key="layer.id"
+              :class="{ selectedLayer: layer.id == $store.currentLayerId }"
               class="layer"
-              @click="clickedLayer(index)"
+              @click="clickedLayer(layer.id)"
             >
               {{ layer.name }}
             </div>
@@ -132,8 +132,8 @@ export default class App extends Vue {
     console.log(option);
   }
 
-  clickedLayer(idx: number) {
-    this.$store.currentLayerIdx = idx;
+  clickedLayer(id: string) {
+    this.$store.currentLayerId = id;
   }
 
   saveCanvas() {

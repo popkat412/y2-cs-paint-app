@@ -4,10 +4,14 @@ import { PointsShape, RectShape, Shape } from "./shape";
 import { DEFAULT_BACKGROUND_COLOR } from "@/constants";
 import GlobalState from "@/globalState";
 import deepCopy from "@/helpers/deepCopy";
+import { v4 as uuidv4 } from 'uuid';
 
 export default class Layer {
   graphics: p5.Graphics;
+
   name: string;
+  id: string;
+
   width: number;
   height: number;
 
@@ -18,7 +22,9 @@ export default class Layer {
     this.graphics = p.createGraphics(p.width, p.height);
     this.width = p.width;
     this.height = p.height;
+
     this.name = name;
+    this.id = uuidv4();
 
     this.shapes = [];
     this.currentShapeIdx = null;

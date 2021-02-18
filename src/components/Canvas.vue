@@ -25,7 +25,9 @@ export default class Canvas extends Vue {
         this.$store.layers.push(
           new Layer(p, `Layer ${this.$store.layers.length + 1}`)
         );
-        this.$store.currentLayerIdx = this.$store.layers.length - 1;
+        this.$store.currentLayerId = this.$store.layers[
+          this.$store.layers.length - 1
+        ].id;
       });
 
       this.$root.$on(EVENTS.saveCanvas, () => {
@@ -33,6 +35,7 @@ export default class Canvas extends Vue {
           alert("Sorry, the canvas hasn't loaded yet");
         } else {
           const format = prompt("File format (png|jpg)", "png")?.toLowerCase();
+          if (!format) return;
           if (format != "png" && format != "jpg") {
             alert("Invalid format, can only be 'png' or 'jpg'");
           } else {
@@ -44,6 +47,7 @@ export default class Canvas extends Vue {
       p.setup = () => {
         canvas = p.createCanvas(window.innerWidth * 0.5, window.innerHeight);
         this.$store.layers = [new Layer(p, "Layer 1")];
+        this.$store.currentLayerId = this.$store.layers[0].id;
 
         console.log(this.$store);
       };

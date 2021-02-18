@@ -12,6 +12,7 @@
 - [x] Save canvas option
 
 ## Features
+- [ ] hold shift to lock square/circle in rect/ellipse tool
 - [ ] Collapsible left bar
 - [ ] Add text
 - [ ] Keyboard Shortcuts + General help page
@@ -22,14 +23,7 @@
 - [ ] upload image???
 
 ## Documentation
-(aka notes to self)
-- Tools
-  - Pen
-  - Eraser
-  - Spray
-- Options
-  - Color
-  - Size
+TODO (_lol_)
 
 ### Layers
 Layers are shown on the right, (it should be that) the layer that is shown on top, is drawn on top,
