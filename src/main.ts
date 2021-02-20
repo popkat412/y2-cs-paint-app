@@ -37,3 +37,12 @@ window.onkeydown = (e: KeyboardEvent) => {
     vm.$emit(EVENTS.undo);
   }
 };
+
+// Confirmation before leaving page
+window.onbeforeunload = (e: BeforeUnloadEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  e.cancelBubble = true;
+  e.returnValue = "";
+  return "";
+};

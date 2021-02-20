@@ -1,13 +1,13 @@
 # y2-cs-paint-app
 
 ## TODO
-- [ ] Implement rect/ellipse
 - [ ] Show layers properly (shown on top == appears on top)
-- [ ] Confirm before close tab
 - [ ] Ability to delete layers
 - [ ] Fix undo bug where if you create new layer then undo it undos 2 instead of 1
 - [ ] Fix layer bug where if you erase on the top layer, the bottom layer also gets erased
         This is due to the eraser drawing the background color instead of it clearing the pixels
+- [x] Confirm before close tab
+- [x] Implement rect/ellipse
 - [x] Undo/Redo
 - [x] Update currently selected layer when layers are rearranged
 - [x] Fix opacity bug
