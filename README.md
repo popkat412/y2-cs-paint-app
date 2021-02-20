@@ -3,9 +3,12 @@
 ## TODO
 - [ ] Implement rect/ellipse
 - [ ] Show layers properly (shown on top == appears on top)
-- [ ] Update currently selected layer when layers are rearranged
-- [ ] Undo/Redo
 - [ ] Confirm before close tab
+- [ ] Ability to delete layers
+- [ ] Fix layer bug where if you erase on the top layer, the bottom layer also gets erased
+        This is due to the eraser drawing the background color instead of it clearing the pixels
+- [x] Undo/Redo
+- [x] Update currently selected layer when layers are rearranged
 - [x] Fix opacity bug
 - [x] Add better CSS
 - [x] Show indicator of size

@@ -44,10 +44,21 @@ export default class Canvas extends Vue {
         }
       });
 
+      this.$root.$on(EVENTS.undo, () => {
+        console.log("undo event received");
+        this.$store.undo();
+      });
+
+      this.$root.$on(EVENTS.redo, () => {
+        console.log("redo event received");
+        this.$store.redo();
+      });
+
       p.setup = () => {
         canvas = p.createCanvas(window.innerWidth * 0.5, window.innerHeight);
         this.$store.layers = [new Layer(p, "Layer 1")];
         this.$store.currentLayerId = this.$store.layers[0].id;
+        this.$store.pushUndoState();
 
         console.log(this.$store);
       };
@@ -59,11 +70,15 @@ export default class Canvas extends Vue {
       };
 
       p.mouseDragged = () => {
+        if (!this.$store.hoveringCanvas) return;
+        console.log("mouse dragged");
         this.$store.currentLayer?.mouseDragged(p, this.$store.currentTool);
       };
 
       p.mouseReleased = () => {
+        if (!this.$store.hoveringCanvas) return;
         this.$store.currentLayer?.mouseReleased();
+        this.$store.pushUndoState();
       };
 
       p.keyPressed = () => {

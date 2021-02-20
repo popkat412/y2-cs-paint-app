@@ -3,7 +3,7 @@ import { Eraser, Pen, Rect, Tool, ToolType } from "@/models/tool";
 import { PointsShape, RectShape, Shape } from "./shape";
 import { DEFAULT_BACKGROUND_COLOR } from "@/constants";
 import GlobalState from "@/globalState";
-import deepCopy from "@/helpers/deepCopy";
+import cloneDeep from "lodash/cloneDeep";
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Layer {
@@ -15,7 +15,7 @@ export default class Layer {
   width: number;
   height: number;
 
-  private shapes: Shape[];
+  shapes: Shape[]; // made public for debugging only
   private currentShapeIdx: number | null;
 
   constructor(p: p5, name: string) {
@@ -67,7 +67,7 @@ export default class Layer {
     if (tool instanceof Pen || tool instanceof Eraser) {
       if (this.currentShapeIdx == null) {
         this.currentShapeIdx = this.shapes.length;
-        this.shapes.push(new PointsShape([mousePos], tool.type, deepCopy(tool.options)));
+        this.shapes.push(new PointsShape([mousePos], tool.type, cloneDeep(tool.options)));
       } else {
         if (this.currentShape instanceof PointsShape) {
           this.currentShape.points.push(mousePos);
@@ -77,7 +77,7 @@ export default class Layer {
       if (this.currentShapeIdx == null) {
         this.currentShapeIdx = this.shapes.length;
         // set the bottom right as the same as top left for now
-        this.shapes.push(new RectShape(mousePos, mousePos, tool.type, deepCopy(tool.options)));
+        this.shapes.push(new RectShape(mousePos, mousePos, tool.type, cloneDeep(tool.options)));
       } else {
         if (this.currentShape instanceof RectShape) {
           // update the shape as person is dragging
@@ -95,7 +95,6 @@ export default class Layer {
     this.shapes = [];
     this.currentShapeIdx = null;
   }
-
 
   private get currentShape(): Shape | null {
     return this.currentShapeIdx == null ? null : this.shapes[this.currentShapeIdx];

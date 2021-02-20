@@ -25,7 +25,7 @@
             style="text-align: left"
             :key="optionName"
           >
-            <label>{{ titleCase(optionName) }}</label>
+            <label>{{ startCase(optionName) }}</label>
             <br v-if="option.type != 'boolean'" />
             <input
               v-if="option.type == 'number'"
@@ -50,8 +50,8 @@
 
       <div>
         <Canvas
-          @mouseover="hoveringCanvas = true"
-          @mouseleave="hoveringCanvas = false"
+          @mouseover="$store.hoveringCanvas = true"
+          @mouseleave="$store.hoveringCanvas = false"
         />
       </div>
 
@@ -79,6 +79,8 @@
 
         <button @click="clearLayer">Clear Layer</button>
         <button @click="saveCanvas">Save as Image</button>
+        <button @click="undo">Undo</button>
+        <button @click="redo">Redo</button>
       </div>
     </main>
   </div>
@@ -92,11 +94,6 @@ import draggable from "vuedraggable";
 import { Chrome } from "vue-color";
 import { Eraser, Pen, Rect } from "./models/tool";
 
-interface Pos {
-  x: number;
-  y: number;
-}
-
 @Component({
   components: {
     Canvas,
@@ -105,14 +102,10 @@ interface Pos {
   },
 })
 export default class App extends Vue {
-  // DATA
-  hoveringCanvas = false;
-  mousePos: Pos = { x: 0, y: 0 };
-
   // METHODS
   updateMousePos(event: MouseEvent) {
-    this.mousePos.x = event.pageX;
-    this.mousePos.y = event.pageY;
+    this.$store.mousePos.x = event.pageX;
+    this.$store.mousePos.y = event.pageY;
   }
 
   addLayer() {
@@ -140,6 +133,16 @@ export default class App extends Vue {
     this.$root.$emit(EVENTS.saveCanvas);
   }
 
+  undo() {
+    console.log("undo button pressed");
+    this.$root.$emit(EVENTS.undo);
+  }
+
+  redo() {
+    console.log("redo button pressed");
+    this.$root.$emit(EVENTS.redo);
+  }
+
   // GETTERS
   get sizeIndicatorStyles() {
     let size = 3;
@@ -160,13 +163,13 @@ export default class App extends Vue {
     return {
       width: size + "px",
       height: size + "px",
-      top: this.mousePos.y - size / 2 + "px",
-      left: this.mousePos.x - size / 2 + "px",
+      top: this.$store.mousePos.y - size / 2 + "px",
+      left: this.$store.mousePos.x - size / 2 + "px",
     };
   }
 
   get showingSizeIndicator() {
-    return this.hoveringCanvas; // && "size" in this.$store.currentTool.options;
+    return this.$store.hoveringCanvas; // && "size" in this.$store.currentTool.options;
   }
 }
 </script>
