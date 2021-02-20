@@ -1,5 +1,5 @@
 import Layer from "@/models/layer";
-import { Eraser, Pen, Rect, Tool, ToolType } from "@/models/tool";
+import { Ellipse, Eraser, Pen, Rect, Tool, ToolType } from "@/models/tool";
 import { Color } from "@/models/types";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -16,7 +16,12 @@ export default class GlobalState {
   layers: Layer[] = [];
   currentLayerId: string | null = null; // this needs to be null because we don't know the layer id until we create it, and creating it needs a p5 instance
 
-  tools: Tool[];
+  tools: Tool[] = [
+    new Pen(),
+    new Eraser(),
+    new Rect(),
+    new Ellipse(),
+  ];
   currentToolIdx = 0;
 
   backgroundColor: Color = "black";
@@ -30,13 +35,6 @@ export default class GlobalState {
   private undoStack: UndoItem[] = [];
   private undoStackIdx = 0;
 
-  constructor() {
-    this.tools = [
-      new Pen(),
-      new Eraser(),
-      new Rect(),
-    ];
-  }
 
   get currentTool(): Tool {
     return this.tools[this.currentToolIdx];
